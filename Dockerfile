@@ -17,6 +17,7 @@ RUN yum -y install cobbler cobbler-web
 RUN systemctl enable cobblerd
 RUN systemctl enable httpd
 
+EXPOSE 69
 EXPOSE 80
 EXPOSE 25151
 
