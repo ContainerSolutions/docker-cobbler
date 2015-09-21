@@ -9,6 +9,7 @@ run:
 	  -v $(shell pwd)/etc/cobbler/settings:/etc/cobbler/settings \
 	  -v $(shell pwd)/etc/cobbler/dhcp.template:/etc/cobbler/dhcp.template \
     -v $(shell pwd)/dist/centos:/mnt:ro \
+    -v $(shell pwd)/ks_mirror:/var/www/cobbler/ks_mirror \
 	  -p 69:69 \
 	  -p 80:80 \
 	  -p 443:443 \
