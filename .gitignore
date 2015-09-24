@@ -1,2 +1,8 @@
 /dist/centos.iso
 /dist/centos/*
+/var/www/cobbler/images
+/var/www/cobbler/ks_mirror
+/var/www/cobbler/links
+/var/lib/cobbler/config
+/var/lib/tftpboot
+
