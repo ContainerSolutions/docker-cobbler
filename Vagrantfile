@@ -38,5 +38,7 @@ Vagrant.configure(2) do |config|
     pacman -Sy
     pacman -S --noconfirm docker
     usermod -a -G docker vagrant
+    systemctl enable docker.service
+    systemctl start docker.service
   EOF
 end
