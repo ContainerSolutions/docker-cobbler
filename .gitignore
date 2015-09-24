@@ -6,3 +6,5 @@
 /var/lib/cobbler/config
 /var/lib/tftpboot
 
+# Ignore vagrant box files
+/.vagrant/
