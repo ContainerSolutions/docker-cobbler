@@ -3,6 +3,7 @@ build:
 
 run:
 	docker run \
+	  -d \
 	  --privileged \
 	  --net host \
 	  -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
