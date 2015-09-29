@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant.configure(2) do |config|
-  config.vm.box = "terrywang/archlinux"
+  config.vm.box = "ubuntu/vivid64"
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
@@ -33,12 +33,11 @@ Vagrant.configure(2) do |config|
     vb.memory = "5120"
     vb.cpus = "8"
   end
-  #
+
   config.vm.provision "shell", inline: <<-EOF
-    pacman -Sy
-    pacman -S --noconfirm docker
+    apt-get update
+    apt-get install -y docker.io fuseiso tcpdump
     usermod -a -G docker vagrant
-    systemctl enable docker.service
-    systemctl start docker.service
+    usermod -a -G fuse vagrant
   EOF
 end
