@@ -12,7 +12,7 @@ rm -f /lib/systemd/system/anaconda.target.wants/*;
 VOLUME [ “/sys/fs/cgroup” ]
 
 RUN yum -y install epel-release
-RUN yum -y install cobbler cobbler-web dhcp syslinux pykickstart
+RUN yum -y install cobbler cobbler-web dhcp bind syslinux pykickstart
 
 RUN systemctl enable cobblerd
 RUN systemctl enable httpd
