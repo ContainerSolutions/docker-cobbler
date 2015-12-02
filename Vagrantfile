@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant.configure(2) do |config|
-  config.vm.box = "ubuntu/vivid64"
+  config.vm.box = "centos/7"
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
@@ -35,9 +35,19 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.provision "shell", inline: <<-EOF
-    apt-get update
-    apt-get install -y docker.io fuseiso tcpdump
-    usermod -a -G docker vagrant
-    usermod -a -G fuse vagrant
+    yum -y update
+    yum -y install epel-release
+    yum -y install cobbler cobbler-web dhcp syslinux pykickstart
+    systemctl enable cobblerd
+    systemctl enable httpd
+    systemctl enable dhcpd
+    sed -i -e 's/\(^.*disable.*=\) yes/\1 no/' /etc/xinetd.d/tftp
+    sed -i -e 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
+    setenforce 0
+    setsebool -P httpd_can_network_connect true
+    systemctl start cobblerd
+    systemctl start httpd
+    cobbler get-loaders
+    cobbler sync
   EOF
 end
