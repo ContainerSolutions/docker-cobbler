@@ -1,5 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
+memory = ENV["VAGRANT_RAM"] || "5120"
 
 Vagrant.configure(2) do |config|
   config.vm.box = "centos/7"
@@ -21,7 +22,7 @@ Vagrant.configure(2) do |config|
   config.vm.synced_folder "./", "/usr/src/cobbler"
 
   config.vm.provider "virtualbox" do |vb|
-    vb.memory = "5120" # Customize the amount of memory on the VM
+    vb.memory = memory
   end
 
   config.vm.provision "shell", inline: <<-EOF
