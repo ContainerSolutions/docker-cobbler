@@ -42,6 +42,9 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", path: "02-pkgconfig.sh"
   config.vm.provision "shell", path: "03-setup.sh"
 
+  setup_provider(config, "terraform-provider-ucs")
+end
+
 def setup_provider(vagrant_config, provider)
   if File.exists? provider
     vagrant_config.vm.provision "file",
