@@ -1,12 +1,4 @@
----
-# cobbler settings file
-# restart cobblerd and run "cobbler sync" after making changes
-# This config file is in YAML 1.0 format
-# see http://yaml.org
-# ==========================================================
-# if 1, cobbler will allow insertions of system records that duplicate
-# the --dns-name information of other system records.  In general,
-# this is undesirable and should be left 0.
+--- # cobbler settings file # restart cobblerd and run "cobbler sync" after making changes # This config file is in YAML 1.0 format # see http://yaml.org # ========================================================== # if 1, cobbler will allow insertions of system records that duplicate # the --dns-name information of other system records.  In general, # this is undesirable and should be left 0.
 allow_duplicate_hostnames: 0
 
 # if 1, cobbler will allow insertions of system records that duplicate
@@ -270,7 +262,7 @@ manage_reverse_zones: []
 # if using cobbler with manage_dhcp, put the IP address
 # of the cobbler server here so that PXE booting guests can find it
 # if you do not set this correctly, this will be manifested in TFTP open timeouts.
-next_server: 192.168.56.1
+next_server: 192.168.56.33
 
 # settings for power management features.  optional.
 # see https://github.com/cobbler/cobbler/wiki/Power-management to learn more
@@ -382,7 +374,7 @@ scm_track_mode: "git"
 # if you have a server that appears differently to different subnets
 # (dual homed, etc), you need to read the --server-override section
 # of the manpage for how that works.
-server: 192.168.56.1
+server: 192.168.56.33
 
 # If set to 1, all commands will be forced to use the localhost address
 # instead of using the above value which can force commands like

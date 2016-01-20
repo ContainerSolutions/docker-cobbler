@@ -5,40 +5,40 @@ memory = ENV["VAGRANT_RAM"] || "5120"
 Vagrant.configure(2) do |config|
   config.vm.box = "centos/7"
 
-  # Create a forwarded port mapping which allows access to a specific port
-  # within the machine from a port on the host machine. In the example below,
-  # accessing "localhost:8080" will access port 80 on the guest machine.
-  # config.vm.network "forwarded_port", guest: 80, host: 8080
+  # Map port where nginx/cobbler web interface will be running in the guest (80)
+  # to the port where it can be accessed in the host (8080).
+  config.vm.network "forwarded_port", guest: 80, host: 8080
+  config.vm.network "forwarded_port", guest: 443, host: 8081
 
-  # Create a private network, which allows host-only access to the machine
-  # using a specific IP.
-  config.vm.network "private_network", ip: "192.168.56.1"
-
-  # Create a public network, which generally matched to bridged network.
-  # Bridged networks make the machine appear as another physical device on
-  # your network.
-  # config.vm.network "public_network"
-
-  config.vm.synced_folder "./", "/usr/src/cobbler"
+  # Create a private virtual network on which the DHCP server will be listening
+  # for incoming broadcasts.
+  # Important note: if you change the IP for the private network, make sure that
+  # you also update it in the etc/cobbler/settings file, as a erroneous IP in that
+  # file will keep the DHCP daemon from coming up.
+  config.vm.network "private_network", ip: "192.168.56.33"
 
   config.vm.provider "virtualbox" do |vb|
     vb.memory = memory
   end
 
-  config.vm.provision "shell", inline: <<-EOF
-    yum -y update
-    yum -y install epel-release
-    yum -y install cobbler cobbler-web dhcp syslinux pykickstart
-    systemctl enable cobblerd
-    systemctl enable httpd
-    systemctl enable dhcpd
-    sed -i -e 's/\(^.*disable.*=\) yes/\1 no/' /etc/xinetd.d/tftp
-    sed -i -e 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
-    setenforce 0
-    setsebool -P httpd_can_network_connect true
-    systemctl start cobblerd
-    systemctl start httpd
-    cobbler get-loaders
-    cobbler sync
-  EOF
+  config.vm.provision "file",
+    source:      "./etc/cobbler/dhcp.template",
+    destination: "/tmp/cobbler-dhcp.template"
+
+  config.vm.provision "file",
+    source:      "./etc/cobbler/settings",
+    destination: "/tmp/cobbler-settings"
+
+  config.vm.provision "file",
+    source:      "./etc/selinux/config",
+    destination: "/tmp/selinux-config"
+
+  config.vm.provision "file",
+    source:      "./etc/xinetd.d/tftp",
+    destination: "/tmp/xinetd.d-tftp"
+
+  config.vm.provision "shell", path: "00-bootstrap.sh"
+  config.vm.provision "shell", path: "01-security.sh"
+  config.vm.provision "shell", path: "02-pkgconfig.sh"
+  config.vm.provision "shell", path: "03-setup.sh"
 end
