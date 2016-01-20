@@ -43,6 +43,7 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", path: "03-setup.sh"
 
   setup_provider(config, "terraform-provider-ucs")
+  setup_provider(config, "terraform-provider-cobbler")
 end
 
 def setup_provider(vagrant_config, provider)
