@@ -41,4 +41,14 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", path: "01-security.sh"
   config.vm.provision "shell", path: "02-pkgconfig.sh"
   config.vm.provision "shell", path: "03-setup.sh"
+
+def setup_provider(vagrant_config, provider)
+  if File.exists? provider
+    vagrant_config.vm.provision "file",
+      source:      provider,
+      destination: "/tmp/#{provider}"
+
+    vagrant_config.vm.provision "shell",
+      inline: "sudo mv /tmp/#{provider} /usr/local/bin/#{provider}"
+  end
 end
