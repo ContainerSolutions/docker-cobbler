@@ -23,7 +23,7 @@ allow_duplicate_macs: 0
 # a restart of the cobblerd daemon. You can only change this variable
 # by manually editing the settings file, and you MUST restart cobblerd
 # after changing it.
-allow_dynamic_settings: 0
+allow_dynamic_settings: 1
 
 # by default, installs are *not* set to send installation logs to the cobbler
 # # # server.  With 'anamon_enabled', kickstart templates may use the pre_anamon
@@ -244,7 +244,7 @@ manage_dhcp: 1
 
 # set to 1 to enable Cobbler's DNS management features.
 # the choice of DNS mangement engine is in /etc/cobbler/modules.conf
-manage_dns: 0
+manage_dns: 1
 
 # set to path of bind chroot to create bind-chroot compatible bind
 # configuration files.  This should be automatically detected.
@@ -264,8 +264,8 @@ manage_rsync: 0
 # if using BIND (named) for DNS management in /etc/cobbler/modules.conf
 # and manage_dns is enabled (above), this lists which zones are managed
 # See the Wiki (https://github.com/cobbler/cobbler/wiki/Dns-management) for more info
-manage_forward_zones: []
-manage_reverse_zones: []
+manage_forward_zones: ['mydomain.com']
+manage_reverse_zones: ['192.168.56']
 
 # if using cobbler with manage_dhcp, put the IP address
 # of the cobbler server here so that PXE booting guests can find it
@@ -290,7 +290,7 @@ power_template_dir: "/etc/cobbler/power"
 # first in it's BIOS order.  Enable this if PXE is first in your BIOS
 # boot order, otherwise leave this disabled.   See the manpage
 # for --netboot-enabled.
-pxe_just_once: 0
+pxe_just_once: 1
 
 # the templates used for PXE config generation are sourced
 # from what directory?
