@@ -1,4 +1,4 @@
-FROM centos:7
+FROM centos:7.2.1511
 
 MAINTAINER thijs.schnitger@container-solutions.com
 RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
