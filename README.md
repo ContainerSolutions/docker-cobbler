@@ -1,3 +1,5 @@
+[![](https://images.microbadger.com/badges/image/containersol/docker-cobbler.svg)](https://microbadger.com/images/containersol/docker-cobbler "Get your own image badge on microbadger.com")
+
 # Docker-Cobbler
 Cobbler in a Docker container
 
