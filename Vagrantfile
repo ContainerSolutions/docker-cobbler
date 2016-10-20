@@ -28,7 +28,8 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", inline: <<-EOF
     yum -y update
     yum -y install epel-release
-    yum -y install cobbler cobbler-web dhcp syslinux pykickstart
+    yum -y install cobbler cobbler-web dhcp syslinux pykickstart xinetd
+    systemctl enable xinetd.service
     systemctl enable cobblerd
     systemctl enable httpd
     systemctl enable dhcpd
@@ -36,6 +37,7 @@ Vagrant.configure(2) do |config|
     sed -i -e 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
     setenforce 0
     setsebool -P httpd_can_network_connect true
+    systemctl start xinetd.service
     systemctl start cobblerd
     systemctl start httpd
     cobbler get-loaders

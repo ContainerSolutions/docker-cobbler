@@ -244,7 +244,7 @@ manage_dhcp: 1
 
 # set to 1 to enable Cobbler's DNS management features.
 # the choice of DNS mangement engine is in /etc/cobbler/modules.conf
-manage_dns: 1
+manage_dns: 0
 
 # set to path of bind chroot to create bind-chroot compatible bind
 # configuration files.  This should be automatically detected.
