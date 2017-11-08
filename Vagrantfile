@@ -28,10 +28,11 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", inline: <<-EOF
     yum -y update
     yum -y install epel-release
-    yum -y install cobbler cobbler-web dhcp syslinux pykickstart
+    yum -y install cobbler cobbler-web dhcp syslinux pykickstart xinetd
     systemctl enable cobblerd
     systemctl enable httpd
     systemctl enable dhcpd
+    systemctl enable xinetd
     sed -i -e 's/\(^.*disable.*=\) yes/\1 no/' /etc/xinetd.d/tftp
     sed -i -e 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
     setenforce 0
