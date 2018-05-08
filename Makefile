@@ -5,7 +5,6 @@ run:
 	@docker run \
 	  -d \
 	  --privileged \
-	  --net host \
 	  -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
 	  -v $(shell pwd)/etc/cobbler/settings:/etc/cobbler/settings \
 	  -v $(shell pwd)/etc/cobbler/dhcp.template:/etc/cobbler/dhcp.template \
